@@ -3,11 +3,6 @@ let minValue, maxValue, answerNumber, orderNumber = 1, gameRun = true;
 const orderNumberField = document.getElementById('orderNumberField');
 const answerField = document.getElementById('answerField');
 
-
-const minValueInput = document.getElementById('minValueInput');
-const maxValueInput = document.getElementById('maxValueInput');
-const startGameButton = document.getElementById('startGameButton');
-
 const guessPhrases = [
     "Может быть, это число",
     "Точно, это должно быть",
@@ -36,25 +31,15 @@ const lessPhrases = [
     "Я думаю, что это число меньше!"
 ];
 
-
 function getRandomPhrase(phrases) {
     const index = Math.floor(Math.random() * phrases.length);
     return phrases[index];
 }
 
-
 function startGame() {
-    minValue = parseInt(minValueInput.value) || 0;
-    maxValue = parseInt(maxValueInput.value) || 100;
-
+    minValue = 0;
+    maxValue = 100;
     
-    minValue = (minValue < -999) ? -999 : (minValue > 999) ? 999 : minValue;
-    maxValue = (maxValue < -999) ? -999 : (maxValue > 999) ? 999 : maxValue;
-
-    $('#minMaxModal').modal('hide'); 
-    document.getElementById('gameStarted').classList.remove('hidden-block');
-    
-   
     answerNumber = Math.floor((minValue + maxValue) / 2);
     orderNumber = 1;
     gameRun = true;
@@ -63,13 +48,9 @@ function startGame() {
     answerField.innerText = `${getRandomPhrase(guessPhrases)} ${answerNumber}?`;
 }
 
-
-startGameButton.addEventListener('click', startGame);
-
 document.getElementById('btnRetry').addEventListener('click', function () {
-    $('#minMaxModal').modal('show'); 
+    startGame();
 });
-
 
 document.getElementById('btnOver').addEventListener('click', function () {
     if (gameRun) {
@@ -107,3 +88,6 @@ document.getElementById('btnEqual').addEventListener('click', function () {
         gameRun = false;
     }
 });
+
+// Инициализируем игру при загрузке страницы
+startGame();
