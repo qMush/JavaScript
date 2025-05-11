@@ -1,0 +1,76 @@
+body {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+#calc {
+    background: #2c3e50;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    padding: 20px;
+}
+
+.input-window {
+    height: 80px;
+    font-size: 2.5rem;
+    text-align: right;
+    background: #ecf0f1;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+}
+
+.btn {
+    font-size: 1.5rem;
+    border-radius: 8px !important;
+    transition: all 0.2s ease;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-outline-danger {
+    color: #e74c3c;
+    border-color: #e74c3c;
+}
+
+.btn-outline-primary {
+    color: #3498db;
+    border-color: #3498db;
+}
+
+.btn-success {
+    background: #27ae60 !important;
+    color: white !important;
+    border: none !important;
+}
+
+.btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+@media (max-width: 576px) {
+    .input-window {
+        font-size: 2rem;
+        height: 60px;
+    }
+
+    .btn {
+        height: 50px;
+        font-size: 1.2rem;
+    }
+}
+
+input:focus, button:focus {
+    outline: none;
+    box-shadow: none !important;
+}
