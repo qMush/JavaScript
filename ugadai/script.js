@@ -38,15 +38,16 @@ function getRandomPhrase(phrases) {
 
 function startGame() {
     minValue = 0;
-    maxValue = 100;
+    maxValue = 1000;  
     
-    answerNumber = Math.floor((minValue + maxValue) / 2);
+    answerNumber = Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;  // Генерация случайного числа
     orderNumber = 1;
     gameRun = true;
 
     orderNumberField.innerText = orderNumber;
     answerField.innerText = `${getRandomPhrase(guessPhrases)} ${answerNumber}?`;
 }
+
 
 document.getElementById('btnRetry').addEventListener('click', function () {
     startGame();
