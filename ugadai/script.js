@@ -1,4 +1,8 @@
-let minValue, maxValue, answerNumber, orderNumber = 1, gameRun = true;
+let minValue;
+let maxValue;
+let answerNumber;
+let orderNumber = 1;
+let gameRun = true;
 
 const orderNumberField = document.getElementById('orderNumberField');
 const answerField = document.getElementById('answerField');
@@ -12,7 +16,7 @@ const guessPhrases = [
 ];
 
 const winPhrases = [
-    "Я сразу знал)",
+    "Я сразу знал",
     "Это было легко",
     "Я всегда угадываю"
 ];
@@ -36,34 +40,62 @@ function getRandomPhrase(phrases) {
     return phrases[index];
 }
 
+function numberToText(n) {
+    const ones = ['ноль', 'один', 'два', 'три', 'четыре', 'пять', 'шесть', 'семь', 'восемь', 'девять'];
+    const teens = ['десять', 'одиннадцать', 'двенадцать', 'тринадцать', 'четырнадцать', 'пятнадцать', 'шестнадцать', 'семнадцать', 'восемнадцать', 'девятнадцать'];
+    const tens = ['', '', 'двадцать', 'тридцать', 'сорок', 'пятьдесят', 'шестьдесят', 'семьдесят', 'восемьдесят', 'девяносто'];
+    const hundreds = ['', 'сто', 'двести', 'триста', 'четыреста', 'пятьсот', 'шестьсот', 'семьсот', 'восемьсот', 'девятьсот'];
+
+    let text = '';
+    let sign = n < 0 ? 'минус ' : '';
+    n = Math.abs(n);
+
+    const h = Math.floor(n / 100);
+    const t = Math.floor((n % 100) / 10);
+    const o = n % 10;
+
+    if (h > 0) text += hundreds[h] + ' ';
+    if (t > 1) {
+        text += tens[t] + ' ';
+        if (o > 0) text += ones[o];
+    } else if (t === 1) {
+        text += teens[o];
+    } else {
+        if (o > 0 || h === 0) text += ones[o];
+    }
+
+    return sign + text.trim();
+}
+
+function getAnswerText(n) {
+    const text = numberToText(n);
+    return text.length <= 20 ? text : n.toString();
+}
+
 function startGame() {
     minValue = 0;
-    maxValue = 1000;  
-    
-    answerNumber = Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;  // Генерация случайного числа
+    maxValue = 1000;
+    answerNumber = Math.floor((minValue + maxValue) / 2);
     orderNumber = 1;
     gameRun = true;
 
     orderNumberField.innerText = orderNumber;
-    answerField.innerText = `${getRandomPhrase(guessPhrases)} ${answerNumber}?`;
+    answerField.innerText = `${getRandomPhrase(guessPhrases)} ${getAnswerText(answerNumber)}?`;
 }
 
-
-document.getElementById('btnRetry').addEventListener('click', function () {
-    startGame();
-});
+document.getElementById('btnRetry').addEventListener('click', startGame);
 
 document.getElementById('btnOver').addEventListener('click', function () {
     if (gameRun) {
         if (minValue > maxValue) {
-            answerField.innerText = `Вы загадали неправильное число!\n\u{1F914}`;
+            answerField.innerText = `Вы загадали неправильное число!\n🤔`;
             gameRun = false;
         } else {
             minValue = answerNumber + 1;
             answerNumber = Math.floor((minValue + maxValue) / 2);
             orderNumber++;
             orderNumberField.innerText = orderNumber;
-            answerField.innerText = `${getRandomPhrase(morePhrases)} ${answerNumber}?`;
+            answerField.innerText = `${getRandomPhrase(morePhrases)} ${getAnswerText(answerNumber)}?`;
         }
     }
 });
@@ -71,14 +103,14 @@ document.getElementById('btnOver').addEventListener('click', function () {
 document.getElementById('btnLess').addEventListener('click', function () {
     if (gameRun) {
         if (minValue > maxValue) {
-            answerField.innerText = `Вы загадали неправильное число!\n\u{1F914}`;
+            answerField.innerText = `Вы загадали неправильное число!\n🤔`;
             gameRun = false;
         } else {
             maxValue = answerNumber - 1;
             answerNumber = Math.floor((minValue + maxValue) / 2);
             orderNumber++;
             orderNumberField.innerText = orderNumber;
-            answerField.innerText = `${getRandomPhrase(lessPhrases)} ${answerNumber}?`;
+            answerField.innerText = `${getRandomPhrase(lessPhrases)} ${getAnswerText(answerNumber)}?`;
         }
     }
 });
@@ -90,5 +122,4 @@ document.getElementById('btnEqual').addEventListener('click', function () {
     }
 });
 
-// Инициализируем игру при загрузке страницы
 startGame();
