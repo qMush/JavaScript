@@ -73,17 +73,33 @@ function getAnswerText(n) {
 }
 
 function startGame() {
-    minValue = 0;
-    maxValue = 1000;
+    const minInput = parseInt(document.getElementById('minInput').value);
+    const maxInput = parseInt(document.getElementById('maxInput').value);
+
+    minValue = isNaN(minInput) ? -999 : Math.max(-999, Math.min(999, minInput));
+    maxValue = isNaN(maxInput) ? 999 : Math.max(-999, Math.min(999, maxInput));
+
+    if (minValue > maxValue) {
+        [minValue, maxValue] = [maxValue, minValue];
+    }
+
     answerNumber = Math.floor((minValue + maxValue) / 2);
     orderNumber = 1;
     gameRun = true;
 
     orderNumberField.innerText = orderNumber;
     answerField.innerText = `${getRandomPhrase(guessPhrases)} ${getAnswerText(answerNumber)}?`;
+
+    document.getElementById('startForm').style.display = 'none';
+    document.getElementById('gameArea').style.display = 'block';
 }
 
-document.getElementById('btnRetry').addEventListener('click', startGame);
+document.getElementById('btnStart').addEventListener('click', startGame);
+
+document.getElementById('btnRetry').addEventListener('click', function () {
+    document.getElementById('startForm').style.display = 'block';
+    document.getElementById('gameArea').style.display = 'none';
+});
 
 document.getElementById('btnOver').addEventListener('click', function () {
     if (gameRun) {
@@ -121,5 +137,3 @@ document.getElementById('btnEqual').addEventListener('click', function () {
         gameRun = false;
     }
 });
-
-startGame();

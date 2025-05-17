@@ -106,3 +106,43 @@ html, body {
         padding: 10px 3px;
     }
 }
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f8f9fa;
+    padding: 20px;
+  }
+  
+  .card {
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  .card-header {
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+  }
+  
+  .card-body input {
+    height: 50px;
+    font-size: 1.2rem;
+    border-radius: 0.5rem;
+  }
+  
+  #btnStart {
+    font-size: 1.2rem;
+    padding: 12px;
+    border-radius: 0.5rem;
+  }
+  
+  #gameArea .btn-group .btn {
+    font-size: 1rem;
+    padding: 10px;
+  }
+  
+  #btnRetry {
+    font-size: 1rem;
+  }
+  
