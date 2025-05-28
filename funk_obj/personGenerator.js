@@ -29,16 +29,6 @@ const personGenerator = {
             "id_5": "Ольга"
         }
     }`,
-    patronymicJson: `{
-        "count": 5,
-        "list": {
-            "id_1": "Александрович",
-            "id_2": "Максимович",
-            "id_3": "Иванович",
-            "id_4": "Петрович",
-            "id_5": "Владимирович"
-        }
-    }`,
     professionJson: {
         male: ["Слесарь", "Военный", "Шахтёр", "Инженер"],
         female: ["Медсестра", "Учительница", "Актриса", "Бухгалтер"]
@@ -73,8 +63,19 @@ const personGenerator = {
     },
 
     randomPatronymic(gender) {
-        let base = this.randomValue(this.patronymicJson);
-        return gender === this.GENDER_FEMALE ? base.replace('ич', 'на') : base;
+        const maleName = this.randomValue(this.firstNameMaleJson);
+        const lastChar = maleName.slice(-1).toLowerCase();
+        let base = maleName;
+
+        if (lastChar === 'й') {
+            base = maleName.slice(0, -1) + 'е';
+        } else if (lastChar === 'а') {
+            base = maleName.slice(0, -1);
+        }
+
+        return gender === this.GENDER_FEMALE
+            ? base + 'вна'
+            : base + 'вич';
     },
 
     randomProfession(gender) {
